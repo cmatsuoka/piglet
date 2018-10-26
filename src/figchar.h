@@ -11,7 +11,7 @@ using Lines = std::vector<std::string>;
 class FIGchar {
     Lines lines;
  public:
-    FIGchar() : lines() {}
+    FIGchar();
     FIGchar(int);
     FIGchar(Lines&);
     FIGchar(InputFile&, int);

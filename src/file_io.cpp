@@ -32,6 +32,11 @@ File::File(std::string path) : File(path, std::fstream::in | std::fstream::out)
 {
 }
 
+bool File::eof()
+{
+    return file.eof();
+}
+
 /**
  * Read a 32-bit big-endian integer from file.
  * @return The 32-bit value
@@ -62,6 +67,11 @@ File& File::read(char *buffer, int size)
         throw std::runtime_error(path + ": short read");
     }
     return *this;
+}
+
+File& File::read_line(std::string &s)
+{
+    std::getline(file, s);
 }
 
 /**
