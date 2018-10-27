@@ -1,2 +1,2 @@
-add_executable(piglet figfont.cpp figchar.cpp file_io.cpp main.cpp)
+add_executable(piglet figfont.cpp figchar.cpp file_io.cpp charsmush.cpp main.cpp)
 
