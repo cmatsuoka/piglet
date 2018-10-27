@@ -50,4 +50,3 @@ FIGchar::FIGchar(InputFile& f, int height) : lines()
 
 }
 
-

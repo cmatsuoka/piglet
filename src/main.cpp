@@ -17,6 +17,16 @@ int main(int argc, char *argv[])
             exit(EXIT_FAILURE);
         }
     }
+
+    std::string msg;
+    if (optind < argc) {
+        msg += argv[optind];
+        for (int i = optind + 1; i < argc; i++) {
+            msg = msg + " " + argv[i];
+        }
+    }
+
+    std::cout << msg << std::endl;
 }
 
 void usage(char *cmd)

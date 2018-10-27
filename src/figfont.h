@@ -15,18 +15,24 @@ constexpr uint32_t SmushEnable    = 1 << 7;
 
 
 class FIGfont {
-    char version;
-    int baseline;
-    int max_length;
-    int comment_lines;
-    bool right_to_left;
-    int count;
-    std::map<char, FIGchar&> chars;
+    char version;        // font standard version (currently 'a')
+    int baseline;        // number of lines from the baseline of a FIGcharacter
+    int max_length;      // maximum length of any line describing a FIGcharacter
+    int comment_lines;   // number of comment lines at the start of the file
+    bool right_to_left;  // FIGcharacter sequence rendering direction
+    int count;           // number of code-tagged FIGcharacters in this FIGfont
+    std::map<char, FIGchar> chars;
  public:
-    char hardblank;
+    char hardblank;      // sub-character used to represent hardblanks
     int height;
     int old_layout;
     int layout;
+
+    FIGfont();                          // construct empty FIGfont
+    FIGfont(std::string const&);        // construct from path
+    FIGchar get(char ch);               // retrieve corresponding FIGchar
+    FIGfont& load(std::string const&);  // load font file 
+    FIGfont& parse_header(std::string const&);  // validate and parse font file header
 };
 
 

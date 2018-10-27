@@ -71,7 +71,9 @@ File& File::read(char *buffer, int size)
 
 File& File::read_line(std::string &s)
 {
+    s.clear();
     std::getline(file, s);
+    return *this;
 }
 
 /**
