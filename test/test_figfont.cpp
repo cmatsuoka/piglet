@@ -1,9 +1,16 @@
 #include "doctest.h"
 #include "../src/figfont.cpp"
 
+namespace {
+
+    const std::string top_dir(TOP_DIR);
+
+}  // namespace
+
+
 TEST_SUITE("figfont") {
     TEST_CASE("figfont::font_load") {
-        auto font = FIGfont("../fonts/standard.flf");
+        auto font = FIGfont(top_dir + "/fonts/standard.flf");
         FIGchar c;
 
         c = FIGchar({" $",
@@ -37,5 +44,16 @@ TEST_SUITE("figfont") {
                      R"#( $\___/$ )#",
                      R"#(         )#"});
         CHECK(font.get(3232) == c);
+    }
+
+    TEST_CASE("figfont::get_tab") {
+        auto font = FIGfont(top_dir + "/fonts/standard.flf");
+        Lines v{" $",
+                " $",
+                " $",
+                " $",
+                " $",
+                " $"};
+        REQUIRE(font.get('\t').get() == v);
     }
 }
