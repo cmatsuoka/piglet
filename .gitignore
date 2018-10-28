@@ -1,5 +1,8 @@
 CMakeCache.txt
 CMakeFiles/
+Testing/
 Makefile
 cmake_install.cmake
+CTestTestfile.cmake
 piglet
+test_piglet

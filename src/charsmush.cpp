@@ -15,7 +15,7 @@ namespace {
             return b;
         }
         if (s1.find(b) != std::string::npos && s2.find(a) != std::string::npos) {
-            return b;
+            return a;
         }
         return 0;
     }
