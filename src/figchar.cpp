@@ -1,4 +1,5 @@
 #include "figchar.h"
+#include <iostream>
 #include <algorithm>
 #include "file_io.h"
 
@@ -24,7 +25,7 @@ FIGchar::FIGchar(int height) : lines()
     }
 }
 
-FIGchar::FIGchar(Lines& ll) : lines()
+FIGchar::FIGchar(Lines ll) : lines()
 {
     if (!ll.empty()) {
         int width = ll[0].length();
@@ -54,7 +55,29 @@ FIGchar::FIGchar(InputFile& f, int height) : lines()
         }
         char mark = line.back();
         line.pop_back();
+        if (line.back() == mark) {
+            line.pop_back();
+        }
         lines.push_back(line);
     }
 
+}
+
+bool FIGchar::operator==(FIGchar const& c) const
+{
+    return lines == c.lines;
+}
+
+bool FIGchar::operator!=(FIGchar const& c) const
+{
+    return lines != c.lines;
+}
+
+std::ostream& operator<<(std::ostream& os, FIGchar& c)
+{
+    auto v = c.get();
+    for (auto s : v) {
+        os << s << '\n';
+    }
+    return os;
 }

@@ -18,12 +18,9 @@ namespace {
     std::vector<std::string> split_whitespace(std::string const& s)
     {
         // FIXME: use C++17 ranges when available
-        std::stringstream ss(s);
-        std::istream_iterator<std::string> begin(ss);
-        std::istream_iterator<std::string> end;
+        std::istringstream ss(s);
+        std::istream_iterator<std::string> begin(ss), end;
         std::vector<std::string> v(begin, end);
-        std::copy(v.begin(), v.end(), std::ostream_iterator<std::string>(std::cout, "\n"));
-
         return v;
     }
 }
@@ -49,7 +46,7 @@ FIGfont::FIGfont(std::string const& path) : FIGfont()
     load(path);
 }
 
-FIGchar FIGfont::get(const char ch)
+FIGchar FIGfont::get(const wchar_t ch)
 {
     if (chars.find(ch) != chars.end()) {
         return chars[ch];
@@ -79,14 +76,14 @@ FIGfont& FIGfont::load(std::string const& path)
     chars['\0'] = FIGchar(height);
 
     // Load required characters
-    for (int i = 32; i <= 127; i++) {
-        FIGchar c(height);
-        chars[static_cast<char>(i)] = c;
+    for (int i = 32; i < 127; i++) {
+        FIGchar c(f, height);
+        chars[static_cast<wchar_t>(i)] = c;
     }
     int extra[]{ 196, 215, 220, 228, 246, 252, 223 };
     for (int i : extra) {
-        FIGchar c(height);
-        chars[static_cast<char>(i)] = c;
+        FIGchar c(f, height);
+        chars[static_cast<wchar_t>(i)] = c;
     }
 
     // Load code-tagged characters 
@@ -97,7 +94,7 @@ FIGfont& FIGfont::load(std::string const& path)
         }
         int code = stoi(line.substr(0, line.find(" ")));
         FIGchar c(f, height);
-        chars[static_cast<char>(code)] = c;
+        chars[static_cast<wchar_t>(code)] = c;
     }
 
     return *this;

@@ -21,7 +21,7 @@ class FIGfont {
     int comment_lines;   // number of comment lines at the start of the file
     bool right_to_left;  // FIGcharacter sequence rendering direction
     int count;           // number of code-tagged FIGcharacters in this FIGfont
-    std::map<char, FIGchar> chars;
+    std::map<wchar_t, FIGchar> chars;
  public:
     char hardblank;      // sub-character used to represent hardblanks
     int height;
@@ -30,7 +30,7 @@ class FIGfont {
 
     FIGfont();                          // construct empty FIGfont
     FIGfont(std::string const&);        // construct from path
-    FIGchar get(char ch);               // retrieve corresponding FIGchar
+    FIGchar get(wchar_t ch);            // retrieve corresponding FIGchar
     FIGfont& load(std::string const&);  // load font file 
     FIGfont& parse_header(std::string const&);  // validate and parse font file header
 };

@@ -13,10 +13,14 @@ class FIGchar {
  public:
     FIGchar();
     FIGchar(int);
-    FIGchar(Lines&);
+    FIGchar(Lines);
     FIGchar(InputFile&, int);
     Lines const& get() { return lines; }
+    bool operator==(FIGchar const&) const;
+    bool operator!=(FIGchar const&) const;
 };
+
+std::ostream& operator<<(std::ostream&, FIGchar&);
 
 
 #endif  // SRC_FIGCHAR_H_
