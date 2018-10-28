@@ -24,8 +24,17 @@ FIGchar::FIGchar(int height) : lines()
     }
 }
 
-FIGchar::FIGchar(Lines& l) : lines(l)
+FIGchar::FIGchar(Lines& ll) : lines()
 {
+    if (!ll.empty()) {
+        int width = ll[0].length();
+        for (auto l : ll) {
+            if (l.length() != width) {
+                throw std::runtime_error("invalid character width");
+            }
+            lines.push_back(l);
+        }
+    }
 }
 
 FIGchar::FIGchar(InputFile& f, int height) : lines()
@@ -49,4 +58,3 @@ FIGchar::FIGchar(InputFile& f, int height) : lines()
     }
 
 }
-

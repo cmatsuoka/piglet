@@ -15,6 +15,7 @@ class FIGchar {
     FIGchar(int);
     FIGchar(Lines&);
     FIGchar(InputFile&, int);
+    Lines const& get() { return lines; }
 };
 
 
