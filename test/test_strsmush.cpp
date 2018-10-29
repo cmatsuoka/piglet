@@ -50,11 +50,11 @@ TEST_SUITE("strsmush") {
     }
 
     TEST_CASE("strsmush::smush") {
-        CHECK(smush("123! ", "xy", 1, '$', 0xbf) == "123!xy");
-        CHECK(smush("123> ", "<y", 2, '$', 0xbf) == "123Xy");
-        CHECK(smush("123! ", "   xy", 5, '$', 0xbf) == "123xy");
-        CHECK(smush("123/ ", "   /y", 5, '$', 0xbf) == "123/y");
-        CHECK(smush("", "   y", 3, '$', 0xbf) == "y");
-        CHECK(smush("", "      ", 1, '$', 0xbf) == "     ");
+        CHECK(StringSmusher::smush("123! ", "xy", 1, '$', 0xbf) == "123!xy");
+        CHECK(StringSmusher::smush("123> ", "<y", 2, '$', 0xbf) == "123Xy");
+        CHECK(StringSmusher::smush("123! ", "   xy", 5, '$', 0xbf) == "123xy");
+        CHECK(StringSmusher::smush("123/ ", "   /y", 5, '$', 0xbf) == "123/y");
+        CHECK(StringSmusher::smush("", "   y", 3, '$', 0xbf) == "y");
+        CHECK(StringSmusher::smush("", "      ", 1, '$', 0xbf) == "     ");
     }
 }

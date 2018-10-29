@@ -1,3 +1,4 @@
+#include "strsmush.h"
 #include <iostream>
 #include <cstdint>
 #include <algorithm>
@@ -39,7 +40,7 @@ namespace {
 }  // namespace
 
 
-std::string smush(std::string const& s1, std::string const& ss2, int amt, char hardblank, uint32_t mode)
+std::string StringSmusher::smush(std::string const& s1, std::string const& ss2, int amt, char hardblank, uint32_t mode)
 {
     if (ss2.empty()) {
         return s1;
