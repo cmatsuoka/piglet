@@ -1,8 +1,9 @@
 #include <unistd.h>
 #include <iostream>
-#include "figfont.h"
+#include "wrapper.h"
 
 void usage(char *);
+void print_output(Lines);
 
 
 int main(int argc, char *argv[])
@@ -26,7 +27,13 @@ int main(int argc, char *argv[])
         }
     }
 
-    std::cout << msg << std::endl;
+    auto font = FIGfont("fonts/standard.flf");
+    auto sm = Smusher(font);
+    auto wr = Wrapper(sm, 80);
+
+    wr.clear();
+    wr.wrap_str("Hello", print_output);
+    print_output(wr.get());
 }
 
 void usage(char *cmd)
@@ -38,3 +45,10 @@ void usage(char *cmd)
     << std::endl;
 }
 
+void print_output(Lines v)
+{
+    for (auto line : v) {
+        std::cout << line << "\n";
+    }
+    std::cout << std::flush;
+}
