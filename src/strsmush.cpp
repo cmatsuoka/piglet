@@ -5,39 +5,35 @@
 #include "charsmush.h"
 
 
-namespace {
+// Compute the number of characters a string can be smushed into another string.
+int StringSmusher::amount(std::string const& s1, std::string const& s2, char hardblank, uint32_t mode)
+{
+    int amt = 0;
 
-    // Compute the number of characters a string can be smushed into another string.
-    int amount(std::string const& s1, std::string const& s2, char hardblank, uint32_t mode)
-    {
-        int amt = 0;
+    char l = ' ';
+    int lpos = std::find_if(s1.rbegin(), s1.rend(), [](int ch) { return !std::isspace(ch); }) - s1.rbegin();
+    if (lpos < s1.length()) {
+        l = s1[s1.length() - 1 - lpos];
+    }
+    amt += lpos;
+    
+    char r = ' ';
+    int rpos = std::find_if(s2.begin(), s2.end(), [](int ch) { return !std::isspace(ch); }) - s2.begin();
+    if (rpos < s2.length()) {
+        r = s2[rpos];
+    }
+    amt += rpos; 
 
-        char l = ' ';
-        int lpos = std::find_if(s1.rbegin(), s1.rend(), [](int ch) { return !std::isspace(ch); }) - s1.rbegin();
-        if (lpos < s1.length()) {
-            l = s1[s1.length() - 1 - lpos];
-        }
-        amt += lpos;
-        
-        char r = ' ';
-        int rpos = std::find_if(s2.begin(), s2.end(), [](int ch) { return !std::isspace(ch); }) - s2.begin();
-        if (rpos < s2.length()) {
-            r = s2[rpos];
-        }
-        amt += rpos; 
-
-        if (l == ' ' || r == ' ') {
-            return amt;
-        }
-
-        if (CharSmusher::smush(l, r, hardblank, false, mode) != 0) {
-            amt++;
-        }
-
+    if (l == ' ' || r == ' ') {
         return amt;
     }
 
-}  // namespace
+    if (CharSmusher::smush(l, r, hardblank, false, mode) != 0) {
+        amt++;
+    }
+
+    return amt;
+}
 
 
 std::string StringSmusher::smush(std::string const& s1, std::string const& ss2, int amt, char hardblank, uint32_t mode)

@@ -2,51 +2,51 @@
 #include "../src/strsmush.cpp"
 
 TEST_SUITE("strsmush") {
-    TEST_CASE("strsmush::amount") {
-        CHECK(amount("", "", '$', 0xbf) == 0);
+    TEST_CASE("strsmush::StringSmusher::amount") {
+        CHECK(StringSmusher::amount("", "", '$', 0xbf) == 0);
 
-        CHECK(amount("", "    ", '$', 0xbf) == 4);
-        CHECK(amount("", "   y", '$', 0xbf) == 3);
+        CHECK(StringSmusher::amount("", "    ", '$', 0xbf) == 4);
+        CHECK(StringSmusher::amount("", "   y", '$', 0xbf) == 3);
 
-        CHECK(amount("    ", "    ", '$', 0xbf) == 8);
-        CHECK(amount("x   ", "    ", '$', 0xbf) == 7);
-        CHECK(amount("xx  ", "    ", '$', 0xbf) == 6);
-        CHECK(amount("xxx ", "    ", '$', 0xbf) == 5);
-        CHECK(amount("xxxx", "    ", '$', 0xbf) == 4);
+        CHECK(StringSmusher::amount("    ", "    ", '$', 0xbf) == 8);
+        CHECK(StringSmusher::amount("x   ", "    ", '$', 0xbf) == 7);
+        CHECK(StringSmusher::amount("xx  ", "    ", '$', 0xbf) == 6);
+        CHECK(StringSmusher::amount("xxx ", "    ", '$', 0xbf) == 5);
+        CHECK(StringSmusher::amount("xxxx", "    ", '$', 0xbf) == 4);
 
-        CHECK(amount("    ", "   y", '$', 0xbf) == 7);
-        CHECK(amount("x   ", "   y", '$', 0xbf) == 6);
-        CHECK(amount("xx  ", "   y", '$', 0xbf) == 5);
-        CHECK(amount("xxx ", "   y", '$', 0xbf) == 4);
-        CHECK(amount("xxxx", "   y", '$', 0xbf) == 3);
+        CHECK(StringSmusher::amount("    ", "   y", '$', 0xbf) == 7);
+        CHECK(StringSmusher::amount("x   ", "   y", '$', 0xbf) == 6);
+        CHECK(StringSmusher::amount("xx  ", "   y", '$', 0xbf) == 5);
+        CHECK(StringSmusher::amount("xxx ", "   y", '$', 0xbf) == 4);
+        CHECK(StringSmusher::amount("xxxx", "   y", '$', 0xbf) == 3);
 
-        CHECK(amount("    ", "  yy", '$', 0xbf) == 6);
-        CHECK(amount("x   ", "  yy", '$', 0xbf) == 5);
-        CHECK(amount("xx  ", "  yy", '$', 0xbf) == 4);
-        CHECK(amount("xxx ", "  yy", '$', 0xbf) == 3);
-        CHECK(amount("xxxx", "  yy", '$', 0xbf) == 2);
+        CHECK(StringSmusher::amount("    ", "  yy", '$', 0xbf) == 6);
+        CHECK(StringSmusher::amount("x   ", "  yy", '$', 0xbf) == 5);
+        CHECK(StringSmusher::amount("xx  ", "  yy", '$', 0xbf) == 4);
+        CHECK(StringSmusher::amount("xxx ", "  yy", '$', 0xbf) == 3);
+        CHECK(StringSmusher::amount("xxxx", "  yy", '$', 0xbf) == 2);
 
-        CHECK(amount("    ", " yyy", '$', 0xbf) == 5);
-        CHECK(amount("x   ", " yyy", '$', 0xbf) == 4);
-        CHECK(amount("xx  ", " yyy", '$', 0xbf) == 3);
-        CHECK(amount("xxx ", " yyy", '$', 0xbf) == 2);
-        CHECK(amount("xxxx", " yyy", '$', 0xbf) == 1);
+        CHECK(StringSmusher::amount("    ", " yyy", '$', 0xbf) == 5);
+        CHECK(StringSmusher::amount("x   ", " yyy", '$', 0xbf) == 4);
+        CHECK(StringSmusher::amount("xx  ", " yyy", '$', 0xbf) == 3);
+        CHECK(StringSmusher::amount("xxx ", " yyy", '$', 0xbf) == 2);
+        CHECK(StringSmusher::amount("xxxx", " yyy", '$', 0xbf) == 1);
 
-        CHECK(amount("    ", "yyyy", '$', 0xbf) == 4);
-        CHECK(amount("x   ", "yyyy", '$', 0xbf) == 3);
-        CHECK(amount("xx  ", "yyyy", '$', 0xbf) == 2);
-        CHECK(amount("xxx ", "yyyy", '$', 0xbf) == 1);
-        CHECK(amount("xxxx", "yyyy", '$', 0xbf) == 0);
+        CHECK(StringSmusher::amount("    ", "yyyy", '$', 0xbf) == 4);
+        CHECK(StringSmusher::amount("x   ", "yyyy", '$', 0xbf) == 3);
+        CHECK(StringSmusher::amount("xx  ", "yyyy", '$', 0xbf) == 2);
+        CHECK(StringSmusher::amount("xxx ", "yyyy", '$', 0xbf) == 1);
+        CHECK(StringSmusher::amount("xxxx", "yyyy", '$', 0xbf) == 0);
 
-        CHECK(amount("x", "y", '$', 0xbf) == 0);
-        CHECK(amount("x", "x", '$', 0xbf) == 1);     // rule 1
-        CHECK(amount("<", ">", '$', 0xbf) == 0);
-        CHECK(amount("_", "/", '$', 0xbf) == 1);     // rule 2
-        CHECK(amount("/", "_", '$', 0xbf) == 1);     // rule 2
-        CHECK(amount("[", "{", '$', 0xbf) == 1);     // rule 3
-        CHECK(amount("[", "]", '$', 0xbf) == 1);     // rule 4
-        CHECK(amount(">", "<", '$', 0xbf) == 1);     // rule 5
-        CHECK(amount("[ ", " {", '$', 0xbf) == 3);   // rule 3 + spacing
+        CHECK(StringSmusher::amount("x", "y", '$', 0xbf) == 0);
+        CHECK(StringSmusher::amount("x", "x", '$', 0xbf) == 1);     // rule 1
+        CHECK(StringSmusher::amount("<", ">", '$', 0xbf) == 0);
+        CHECK(StringSmusher::amount("_", "/", '$', 0xbf) == 1);     // rule 2
+        CHECK(StringSmusher::amount("/", "_", '$', 0xbf) == 1);     // rule 2
+        CHECK(StringSmusher::amount("[", "{", '$', 0xbf) == 1);     // rule 3
+        CHECK(StringSmusher::amount("[", "]", '$', 0xbf) == 1);     // rule 4
+        CHECK(StringSmusher::amount(">", "<", '$', 0xbf) == 1);     // rule 5
+        CHECK(StringSmusher::amount("[ ", " {", '$', 0xbf) == 3);   // rule 3 + spacing
     }
 
     TEST_CASE("strsmush::smush") {

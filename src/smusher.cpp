@@ -2,16 +2,35 @@
 #include <algorithm>
 #include <string>
 #include "figfont.h"
+#include "strsmush.h"
 
 
 namespace {
 
+    int amount(Lines& lines, FIGchar& c, char hardblank, uint32_t mode)
+    {
+        int amt = 9999;
+        auto clines = c.get();
+        for (int i = 0; i < lines.size(); i++) {
+            amt = std::min(amt, StringSmusher::amount(lines[i], clines[i], hardblank, mode));
+        }
+        return amt;
+    }
+
     void trim(Lines& lines, int width)
     {
+        for (auto it = lines.begin(); it != lines.end(); it++) {
+            *it = (*it).substr(0, width);
+        }
     }
 
     void smush(Lines& lines, FIGchar& c, char hardblank, bool full_width, uint32_t mode)
     {
+        auto amt = full_width ? 0 : amount(lines, c, hardblank, mode);
+        auto clines = c.get();
+        for (int i = 0; i < lines.size(); i++) {
+            lines[i] = StringSmusher::smush(lines[i], clines[i], amt, hardblank, mode);
+        }
     }
 
 }  // namespace
