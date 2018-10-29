@@ -1,6 +1,7 @@
 add_executable(piglet
-    figfont.cpp
+    lines.cpp
     figchar.cpp
+    figfont.cpp
     file_io.cpp
     charsmush.cpp
     strsmush.cpp

@@ -47,8 +47,5 @@ void usage(char *cmd)
 
 void print_output(Lines v)
 {
-    for (auto line : v) {
-        std::cout << line << "\n";
-    }
-    std::cout << std::flush;
+    std::cout << v << std::flush;
 }

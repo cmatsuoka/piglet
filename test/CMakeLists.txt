@@ -1,4 +1,5 @@
 add_executable(test_piglet
+    test_lines.cpp
     test_file_io.cpp
     test_figchar.cpp
     test_figfont.cpp

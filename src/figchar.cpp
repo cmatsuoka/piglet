@@ -76,8 +76,5 @@ bool FIGchar::operator!=(FIGchar const& c) const
 std::ostream& operator<<(std::ostream& os, FIGchar& c)
 {
     auto v = c.get();
-    for (auto s : v) {
-        os << s << '\n';
-    }
-    return os;
+    return os << v;
 }

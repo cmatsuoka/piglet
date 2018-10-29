@@ -3,9 +3,8 @@
 
 #include <string>
 #include <vector>
+#include "lines.h"
 #include "file_io.h"
-
-using Lines = std::vector<std::string>;
 
 
 class FIGchar {

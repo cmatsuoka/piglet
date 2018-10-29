@@ -4,10 +4,7 @@
 TEST_SUITE("figchar") {
     TEST_CASE("figchar::construct_from_height") {
         FIGchar c(3);
-        auto l = c.get();
-        REQUIRE(l[0] == "");
-        REQUIRE(l[1] == "");
-        REQUIRE(l[2] == "");
+        REQUIRE(c.get() == Lines{"", "", ""});
     }
 
     TEST_CASE("figchar::construct_from_lines") {
@@ -19,8 +16,7 @@ TEST_SUITE("figchar") {
     }
 
     TEST_CASE("figchar::construct_from_lines_unaligned") {
-        Lines v{"123", "456", "7890"};
-        REQUIRE_THROWS_AS(FIGchar c(v), std::runtime_error);
+        REQUIRE_THROWS_AS(FIGchar c({"123", "456", "7890"}), std::runtime_error);
     }
 
     TEST_CASE("figchar::operator==") {
