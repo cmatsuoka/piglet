@@ -5,5 +5,6 @@ add_executable(piglet
     charsmush.cpp
     strsmush.cpp
     smusher.cpp
+    wrapper.cpp
     main.cpp)
 
