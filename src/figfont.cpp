@@ -119,8 +119,8 @@ FIGfont& FIGfont::parse_header(std::string const& line)
     old_layout = stoi(parms[4]);
     comment_lines = stoi(parms[5]);
     right_to_left = parms[6] == "1";
-    layout = parms[7] == "1";
-    count = parms[8] == "1";
+    layout = stoi(parms[7]);
+    count = stoi(parms[8]);
 
     return *this;
 }
