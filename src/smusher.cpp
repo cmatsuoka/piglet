@@ -89,6 +89,7 @@ Smusher& Smusher::push(wchar_t c)
 {
     auto fc = font.get(c);
     smush(output, fc, font.hardblank, full_width, mode);
+    return *this;
 }
 
 // Obtain the size, in sub-characters, of any line of the output buffer.

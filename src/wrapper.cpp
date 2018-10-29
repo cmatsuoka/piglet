@@ -56,12 +56,13 @@ Lines Wrapper::get()
     auto v = sm.get();
 
     switch (align) {
-    case Align::Left:
-        return v;
     case Align::Center:
         return add_pad(v, w / 2);
     case Align::Right:
         return add_pad(v, w);
+    case Align::Left:
+    default:
+        return v;
     }
 }
 
