@@ -3,7 +3,6 @@
 #include <iostream>
 #include <sstream>
 #include <iterator>
-#include <map>
 #include "figchar.h"
 #include "file_io.h"
 

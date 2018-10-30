@@ -1,7 +1,7 @@
 #ifndef SRC_FIGFONT_H_
 #define SRC_FIGFONT_H_
 
-#include <map>
+#include <unordered_map>
 #include "figchar.h"
 
 constexpr uint32_t SmushEqual     = 1 << 0;
@@ -21,7 +21,7 @@ class FIGfont {
     int comment_lines;   // number of comment lines at the start of the file
     bool right_to_left;  // FIGcharacter sequence rendering direction
     int count;           // number of code-tagged FIGcharacters in this FIGfont
-    std::map<wchar_t, FIGchar> chars;
+    std::unordered_map<wchar_t, FIGchar> chars;
  public:
     char hardblank;      // sub-character used to represent hardblanks
     int height;
