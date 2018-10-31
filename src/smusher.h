@@ -17,7 +17,7 @@ class Smusher {
     FIGline get();
     bool empty();
     Smusher& clear();
-    Smusher& push(std::string);
+    Smusher& push(std::wstring);
     Smusher& push(wchar_t);
     Smusher& trim(int);
     int length();

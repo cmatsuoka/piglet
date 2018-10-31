@@ -6,7 +6,7 @@
 
 
 // Compute the number of characters a string can be smushed into another string.
-int StringSmusher::amount(std::string const& s1, std::string const& s2, char hardblank, uint32_t mode)
+int StringSmusher::amount(std::wstring const& s1, std::wstring const& s2, wchar_t hardblank, uint32_t mode)
 {
     int amt = 0;
 
@@ -36,7 +36,7 @@ int StringSmusher::amount(std::string const& s1, std::string const& s2, char har
 }
 
 
-std::string StringSmusher::smush(std::string const& s1, std::string const& ss2, int amt, char hardblank, uint32_t mode)
+std::wstring StringSmusher::smush(std::wstring const& s1, std::wstring const& ss2, int amt, wchar_t hardblank, uint32_t mode)
 {
     if (ss2.empty()) {
         return s1;
@@ -44,7 +44,7 @@ std::string StringSmusher::smush(std::string const& s1, std::string const& ss2, 
 
     int l1 = s1.length();
 
-    std::string s2(ss2);
+    std::wstring s2(ss2);
 
     if (amt > l1) {
         s2 = s2.substr(amt - l1, s2.length());

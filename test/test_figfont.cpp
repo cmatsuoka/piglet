@@ -13,47 +13,47 @@ TEST_SUITE("figfont") {
         auto font = FIGfont(top_dir + "/fonts/standard.flf");
         FIGchar c;
 
-        c = FIGchar({" $",
-                     " $",
-                     " $",
-                     " $",
-                     " $",
-                     " $"});
+        c = FIGchar({L" $",
+                     L" $",
+                     L" $",
+                     L" $",
+                     L" $",
+                     L" $"});
         CHECK(font.get(' ') == c);
 
-        c = FIGchar({R"(     _    )",
-                     R"(    / \   )",
-                     R"(   / _ \  )",
-                     R"(  / ___ \ )",
-                     R"( /_/   \_\)",
-                     R"(          )"});
+        c = FIGchar({LR"(     _    )",
+                     LR"(    / \   )",
+                     LR"(   / _ \  )",
+                     LR"(  / ___ \ )",
+                     LR"( /_/   \_\)",
+                     LR"(          )"});
         CHECK(font.get('A') == c);
 
-        c = FIGchar({R"(   ___ )",
-                     R"(  / _ \)",
-                     R"( | |/ /)",
-                     R"( | |\ \)",
-                     R"( | ||_/)",
-                     R"( |_|   )"});
+        c = FIGchar({LR"(   ___ )",
+                     LR"(  / _ \)",
+                     LR"( | |/ /)",
+                     LR"( | |\ \)",
+                     LR"( | ||_/)",
+                     LR"( |_|   )"});
         CHECK(font.get(223) == c);
 
-        c = FIGchar({R"#(   _____))#",
-                     R"#(  /_ ___/)#",
-                     R"#(  / _ \  )#",
-                     R"#( | (_) | )#",
-                     R"#( $\___/$ )#",
-                     R"#(         )#"});
+        c = FIGchar({LR"#(   _____))#",
+                     LR"#(  /_ ___/)#",
+                     LR"#(  / _ \  )#",
+                     LR"#( | (_) | )#",
+                     LR"#( $\___/$ )#",
+                     LR"#(         )#"});
         CHECK(font.get(3232) == c);
     }
 
     TEST_CASE("figfont::get_tab") {
         auto font = FIGfont(top_dir + "/fonts/standard.flf");
-        FIGline v{" $",
-                " $",
-                " $",
-                " $",
-                " $",
-                " $"};
+        FIGline v{L" $",
+                  L" $",
+                  L" $",
+                  L" $",
+                  L" $",
+                  L" $"};
         REQUIRE(font.get('\t').get() == v);
     }
 }

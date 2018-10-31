@@ -32,7 +32,7 @@ class FIGfont {
     FIGfont(std::string const&);        // construct from path
     FIGchar get(wchar_t ch);            // retrieve corresponding FIGchar
     FIGfont& load(std::string const&);  // load font file 
-    FIGfont& parse_header(std::string const&);  // validate and parse font file header
+    FIGfont& parse_header(std::wstring const&);  // validate and parse font file header
 };
 
 

@@ -7,13 +7,11 @@
 
 class File {
     std::string path;
-    std::fstream file;
+    std::wfstream file;
  public:
     explicit File(std::string);
     File(std::string, std::ios_base::openmode);
-    uint32_t read32b();
-    File& read(char *, int);
-    File& read_line(std::string&);
+    File& read_line(std::wstring&);
     File& seekg(off_t);
     bool eof();
     static bool exists(std::string const&);

@@ -4,25 +4,23 @@
 TEST_SUITE("figchar") {
     TEST_CASE("figchar::construct_from_height") {
         FIGchar c(3);
-        REQUIRE(c.get() == FIGline{"", "", ""});
+        REQUIRE(c.get() == FIGline{L"", L"", L""});
     }
 
     TEST_CASE("figchar::construct_from_lines") {
-        FIGchar c({"123", "456", "789"});
+        FIGchar c({L"123", L"456", L"789"});
         auto l = c.get();
-        REQUIRE(l[0] == "123");
-        REQUIRE(l[1] == "456");
-        REQUIRE(l[2] == "789");
+        REQUIRE(c.get() == FIGline{L"123", L"456", L"789"});
     }
 
     TEST_CASE("figchar::construct_from_lines_unaligned") {
-        REQUIRE_THROWS_AS(FIGchar c({"123", "456", "7890"}), std::runtime_error);
+        REQUIRE_THROWS_AS(FIGchar c({L"123", L"456", L"7890"}), std::runtime_error);
     }
 
     TEST_CASE("figchar::operator==") {
-        FIGchar a({"123", "456", "789"});
-        FIGchar b({"123", "456", "789"});
-        FIGchar c({"123", "456", "780"});
+        FIGchar a({L"123", L"456", L"789"});
+        FIGchar b({L"123", L"456", L"789"});
+        FIGchar c({L"123", L"456", L"780"});
         REQUIRE(a == b);
         REQUIRE(a != c);
     }

@@ -14,7 +14,7 @@ enum class Align : int {
 
 class Wrapper {
     Smusher& sm;         // the FIGcharacter smusher
-    std::string buffer;  // buffer to keep our input text
+    std::wstring buffer; // buffer to keep our input text
     bool has_space;      // whether we should add an extra space
  public:
     int width;           // terminal width
@@ -22,10 +22,10 @@ class Wrapper {
 
     Wrapper(Smusher&, int);
     Wrapper& clear();
-    bool push(std::string const&);
+    bool push(std::wstring const&);
     bool push(wchar_t);
-    Wrapper& wrap_str(std::string const&, std::function<void(FIGline)>);
-    Wrapper& wrap_word(std::string const&, std::function<void(FIGline)>);
+    Wrapper& wrap_str(std::wstring const&, std::function<void(FIGline)>);
+    Wrapper& wrap_word(std::wstring const&, std::function<void(FIGline)>);
     FIGline get();
     int length();
     bool empty();

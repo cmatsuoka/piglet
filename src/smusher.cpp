@@ -7,7 +7,7 @@
 
 namespace {
 
-    int amount(FIGline& lines, FIGchar& c, char hardblank, uint32_t mode)
+    int amount(FIGline& lines, FIGchar& c, wchar_t hardblank, uint32_t mode)
     {
         int amt = 9999;
         auto clines = c.get();
@@ -24,7 +24,7 @@ namespace {
         }
     }
 
-    void smush(FIGline& lines, FIGchar& c, char hardblank, bool full_width, uint32_t mode)
+    void smush(FIGline& lines, FIGchar& c, wchar_t hardblank, bool full_width, uint32_t mode)
     {
         auto amt = full_width ? 0 : amount(lines, c, hardblank, mode);
         auto clines = c.get();
@@ -41,11 +41,8 @@ Smusher::Smusher(FIGfont& f) :
     mode(f.layout),
     full_width(f.old_layout == -1),
     right2left(false),
-    output{}
+    output(font.height)
 {
-    for (int i = 0; i < font.height; i++) {
-        output.push_back("");
-    }
 }
 
 // Get the contents of the output buffer.
@@ -75,7 +72,7 @@ Smusher& Smusher::clear()
 
 // Add a string to the output buffer, applying the smushing rules specified
 // in the font layout.
-Smusher& Smusher::push(std::string s)
+Smusher& Smusher::push(std::wstring s)
 {
     for (auto it = s.begin(); it != s.end(); it++) {
         push(*it);

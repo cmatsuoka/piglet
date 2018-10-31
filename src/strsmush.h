@@ -7,8 +7,8 @@
 
 class StringSmusher {
  public:
-    static int amount(std::string const&, std::string const&, char, uint32_t);
-    static std::string smush(std::string const&, std::string const&, int, char, uint32_t);
+    static int amount(std::wstring const&, std::wstring const&, wchar_t, uint32_t);
+    static std::wstring smush(std::wstring const&, std::wstring const&, int, wchar_t, uint32_t);
 };
 
 #endif  // SRC_STRSMUSH_H_

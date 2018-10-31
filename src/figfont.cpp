@@ -9,17 +9,17 @@
 
 namespace {
 
-    bool starts_with(std::string const& s, std::string prefix)
+    bool starts_with(std::wstring const& s, std::wstring prefix)
     {
         return s.compare(0, prefix.length(), prefix) == 0;
     }
 
-    std::vector<std::string> split_whitespace(std::string const& s)
+    std::vector<std::wstring> split_whitespace(std::wstring const& s)
     {
         // FIXME: use C++17 ranges when available
-        std::istringstream ss(s);
-        std::istream_iterator<std::string> begin(ss), end;
-        std::vector<std::string> v(begin, end);
+        std::wistringstream ss(s);
+        std::istream_iterator<std::wstring, wchar_t> begin(ss), end;
+        std::vector<std::wstring> v(begin, end);
         return v;
     }
 }
@@ -62,7 +62,7 @@ FIGfont& FIGfont::load(std::string const& path)
 {
     InputFile f(path);
 
-    std::string line;
+    std::wstring line;
     f.read_line(line);
     parse_header(line);
     
@@ -91,7 +91,7 @@ FIGfont& FIGfont::load(std::string const& path)
         if (f.eof()) {
             break;
         }
-        int code = stoi(line.substr(0, line.find(" ")));
+        int code = stoi(line.substr(0, line.find(L" ")));
         FIGchar c(f, height);
         chars[static_cast<wchar_t>(code)] = c;
     }
@@ -99,9 +99,9 @@ FIGfont& FIGfont::load(std::string const& path)
     return *this;
 }
 
-FIGfont& FIGfont::parse_header(std::string const& line)
+FIGfont& FIGfont::parse_header(std::wstring const& line)
 {
-    if (!starts_with(line, "flf2") && !starts_with(line, "tlf2")) {
+    if (!starts_with(line, L"flf2") && !starts_with(line, L"tlf2")) {
         throw std::runtime_error("unsupported font format");
     }
 
@@ -117,7 +117,7 @@ FIGfont& FIGfont::parse_header(std::string const& line)
     max_length = stoi(parms[3]);
     old_layout = stoi(parms[4]);
     comment_lines = stoi(parms[5]);
-    right_to_left = parms[6] == "1";
+    right_to_left = parms[6] == L"1";
     layout = stoi(parms[7]);
     count = stoi(parms[8]);
 

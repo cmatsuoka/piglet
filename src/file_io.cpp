@@ -37,39 +37,7 @@ bool File::eof()
     return file.eof();
 }
 
-/**
- * Read a 32-bit big-endian integer from file.
- * @return The 32-bit value
- */
-uint32_t File::read32b()
-{
-    char b[4];
-    file.read(b, 4);
-    if (file.eof()) {
-        throw std::runtime_error(path + ": short read");
-    }
-    return (((uint32_t)(uint8_t)b[0]) << 24) |
-           (((uint32_t)(uint8_t)b[1]) << 16) |
-           (((uint32_t)(uint8_t)b[2]) << 8)  |
-             (uint32_t)(uint8_t)b[3];
-}
-
-/**
- * Read data from file.
- * @param buffer Buffer to hold the input data
- * @param size Amount of data to read
- * @return This file object
- */
-File& File::read(char *buffer, int size)
-{
-    file.read(buffer, size);
-    if (file.eof()) {
-        throw std::runtime_error(path + ": short read");
-    }
-    return *this;
-}
-
-File& File::read_line(std::string &s)
+File& File::read_line(std::wstring &s)
 {
     s.clear();
     std::getline(file, s);

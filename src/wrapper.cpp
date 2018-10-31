@@ -5,11 +5,11 @@
 
 namespace {
 
-    std::string trim(const std::string& str, const std::string& whitespace = " \t")
+    std::wstring trim(const std::wstring& str, const std::wstring& whitespace = L" \t")
     {
         const auto start = str.find_first_not_of(whitespace);
         if (start == std::string::npos) {
-            return "";  // no content
+            return L"";  // no content
         }
         const auto end = str.find_last_not_of(whitespace);
         return str.substr(start, end - start + 1);
@@ -17,7 +17,7 @@ namespace {
 
     FIGline add_pad(FIGline& v, int pad_size) {
         FIGline res;
-        auto pad = std::string(pad_size, ' ');
+        auto pad = std::wstring(pad_size, ' ');
         for (auto line : v) {
             res.push_back(pad + line);
         }
@@ -79,7 +79,7 @@ bool Wrapper::empty()
 }
 
 // Add a string to the output buffer.
-bool Wrapper::push(std::string const &s)
+bool Wrapper::push(std::wstring const &s)
 {
     sm.push(s);
     if (sm.length() > width) {
@@ -105,7 +105,7 @@ bool Wrapper::push(wchar_t ch)
 }
 
 // Add a string to the output buffer, wrapping it if necessary.
-Wrapper& Wrapper::wrap_str(std::string const& ss, std::function<void(FIGline)> flush)
+Wrapper& Wrapper::wrap_str(std::wstring const& ss, std::function<void(FIGline)> flush)
 {
     auto s = trim(ss);
     if (!has_space && !s.empty()) {
@@ -128,7 +128,7 @@ Wrapper& Wrapper::wrap_str(std::string const& ss, std::function<void(FIGline)> f
 }
 
 // Add a word to the output buffer, breaking it if necessary.
-Wrapper& Wrapper::wrap_word(std::string const& s, std::function<void(FIGline)> flush)
+Wrapper& Wrapper::wrap_word(std::wstring const& s, std::function<void(FIGline)> flush)
 {
     for (auto c : s) {
         if (!push(c)) {

@@ -5,14 +5,14 @@
 #include <vector>
 
 
-class FIGline : public std::vector<std::string> {
+class FIGline : public std::vector<std::wstring> {
  public:
     FIGline();
     FIGline(int);
-    FIGline(std::initializer_list<std::string>);
+    FIGline(std::initializer_list<std::wstring>);
 };
 
-std::ostream& operator<<(std::ostream&, FIGline&);
+std::wostream& operator<<(std::wostream&, FIGline&);
 
 
 #endif  // SRC_FIGLINE_H_

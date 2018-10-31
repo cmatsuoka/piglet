@@ -6,7 +6,7 @@
 
 namespace {
 
-    void trim_right(std::string &s)
+    void trim_right(std::wstring &s)
     {
         s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) { return !std::isspace(ch); }).base(), s.end());
     }
@@ -37,7 +37,7 @@ FIGchar::FIGchar(FIGline ll) : lines()
 
 FIGchar::FIGchar(InputFile& f, int height) : lines()
 {
-    std::string line = "";
+    std::wstring line;
     for (int i = 0; i < height; i++) {
         line.clear();
         f.read_line(line);
@@ -50,7 +50,7 @@ FIGchar::FIGchar(InputFile& f, int height) : lines()
         if (line.length() < 1) {
             throw std::runtime_error("invalid character width");
         }
-        char mark = line.back();
+        auto mark = line.back();
         line.pop_back();
         if (line.back() == mark) {
             line.pop_back();
@@ -70,7 +70,7 @@ bool FIGchar::operator!=(FIGchar const& c) const
     return lines != c.lines;
 }
 
-std::ostream& operator<<(std::ostream& os, FIGchar& c)
+std::wostream& operator<<(std::wostream& os, FIGchar& c)
 {
     auto v = c.get();
     return os << v;
