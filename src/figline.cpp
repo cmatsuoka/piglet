@@ -6,6 +6,10 @@ FIGline::FIGline()
 {
 }
 
+FIGline::FIGline(int height) : std::vector<std::string>(height)
+{
+}
+
 FIGline::FIGline(std::initializer_list<std::string> v)
 {
     this->insert(this->begin(), v.begin(), v.end());

@@ -8,6 +8,7 @@
 class FIGline : public std::vector<std::string> {
  public:
     FIGline();
+    FIGline(int);
     FIGline(std::initializer_list<std::string>);
 };
 

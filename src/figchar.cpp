@@ -18,11 +18,8 @@ FIGchar::FIGchar() : lines()
 {
 }
 
-FIGchar::FIGchar(int height) : lines()
+FIGchar::FIGchar(int height) : lines(height)
 {
-    for (int i = 0; i < height; i++) {
-        lines.push_back("");
-    }
 }
 
 FIGchar::FIGchar(FIGline ll) : lines()
