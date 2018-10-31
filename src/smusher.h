@@ -11,10 +11,10 @@ class Smusher {
     bool full_width;
     bool right2left;
     FIGfont& font;
-    Lines output;
+    FIGline output;
  public:
     Smusher(FIGfont &f);
-    Lines get();
+    FIGline get();
     bool empty();
     Smusher& clear();
     Smusher& push(std::string);

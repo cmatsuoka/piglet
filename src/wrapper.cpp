@@ -15,8 +15,8 @@ namespace {
         return str.substr(start, end - start + 1);
     }
 
-    Lines add_pad(Lines& v, int pad_size) {
-        Lines res;
+    FIGline add_pad(FIGline& v, int pad_size) {
+        FIGline res;
         auto pad = std::string(pad_size, ' ');
         for (auto line : v) {
             res.push_back(pad + line);
@@ -46,7 +46,7 @@ Wrapper& Wrapper::clear()
 }
 
 // Retrieve the output buffer lines.
-Lines Wrapper::get()
+FIGline Wrapper::get()
 {
     if (length() > width) {
         sm.trim(width);
@@ -105,7 +105,7 @@ bool Wrapper::push(wchar_t ch)
 }
 
 // Add a string to the output buffer, wrapping it if necessary.
-Wrapper& Wrapper::wrap_str(std::string const& ss, std::function<void(Lines)> flush)
+Wrapper& Wrapper::wrap_str(std::string const& ss, std::function<void(FIGline)> flush)
 {
     auto s = trim(ss);
     if (!has_space && !s.empty()) {
@@ -128,7 +128,7 @@ Wrapper& Wrapper::wrap_str(std::string const& ss, std::function<void(Lines)> flu
 }
 
 // Add a word to the output buffer, breaking it if necessary.
-Wrapper& Wrapper::wrap_word(std::string const& s, std::function<void(Lines)> flush)
+Wrapper& Wrapper::wrap_word(std::string const& s, std::function<void(FIGline)> flush)
 {
     for (auto c : s) {
         if (!push(c)) {

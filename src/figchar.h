@@ -3,18 +3,18 @@
 
 #include <string>
 #include <vector>
-#include "lines.h"
+#include "figline.h"
 #include "file_io.h"
 
 
 class FIGchar {
-    Lines lines;
+    FIGline lines;
  public:
     FIGchar();
     FIGchar(int);
-    FIGchar(Lines);
+    FIGchar(FIGline);
     FIGchar(InputFile&, int);
-    Lines const& get() { return lines; }
+    FIGline const& get() { return lines; }
     bool operator==(FIGchar const&) const;
     bool operator!=(FIGchar const&) const;
 };

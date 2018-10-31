@@ -1,5 +1,5 @@
 #include "doctest.h"
-#include "../src/lines.cpp"
+#include "../src/figline.cpp"
 
 TEST_SUITE("lines") {
 }

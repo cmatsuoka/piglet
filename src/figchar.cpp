@@ -25,7 +25,7 @@ FIGchar::FIGchar(int height) : lines()
     }
 }
 
-FIGchar::FIGchar(Lines ll) : lines()
+FIGchar::FIGchar(FIGline ll) : lines()
 {
     if (!ll.empty()) {
         int width = ll[0].length();

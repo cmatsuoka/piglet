@@ -4,7 +4,7 @@
 TEST_SUITE("figchar") {
     TEST_CASE("figchar::construct_from_height") {
         FIGchar c(3);
-        REQUIRE(c.get() == Lines{"", "", ""});
+        REQUIRE(c.get() == FIGline{"", "", ""});
     }
 
     TEST_CASE("figchar::construct_from_lines") {

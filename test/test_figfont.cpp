@@ -48,7 +48,7 @@ TEST_SUITE("figfont") {
 
     TEST_CASE("figfont::get_tab") {
         auto font = FIGfont(top_dir + "/fonts/standard.flf");
-        Lines v{" $",
+        FIGline v{" $",
                 " $",
                 " $",
                 " $",

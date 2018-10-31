@@ -7,7 +7,7 @@
 
 namespace {
 
-    int amount(Lines& lines, FIGchar& c, char hardblank, uint32_t mode)
+    int amount(FIGline& lines, FIGchar& c, char hardblank, uint32_t mode)
     {
         int amt = 9999;
         auto clines = c.get();
@@ -17,14 +17,14 @@ namespace {
         return amt;
     }
 
-    void trim(Lines& lines, int width)
+    void trim(FIGline& lines, int width)
     {
         for (auto it = lines.begin(); it != lines.end(); it++) {
             *it = (*it).substr(0, width);
         }
     }
 
-    void smush(Lines& lines, FIGchar& c, char hardblank, bool full_width, uint32_t mode)
+    void smush(FIGline& lines, FIGchar& c, char hardblank, bool full_width, uint32_t mode)
     {
         auto amt = full_width ? 0 : amount(lines, c, hardblank, mode);
         auto clines = c.get();
@@ -49,9 +49,9 @@ Smusher::Smusher(FIGfont& f) :
 }
 
 // Get the contents of the output buffer.
-Lines Smusher::get()
+FIGline Smusher::get()
 {
-    Lines res = output;
+    FIGline res = output;
     for (auto it = res.begin(); it != res.end(); it++) {
         std::replace((*it).begin(), (*it).end(), font.hardblank, ' ');
     }

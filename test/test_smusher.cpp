@@ -3,7 +3,7 @@
 
 TEST_SUITE("smusher") {
     TEST_CASE("smusher::amount") {
-        Lines output;
+        FIGline output;
         FIGchar fc;
 
         output = {"", "", "", ""};
@@ -24,8 +24,8 @@ TEST_SUITE("smusher") {
     }
 
     TEST_CASE("smusher::trim") {
-        Lines output{"12345", "abcde"};
+        FIGline output{"12345", "abcde"};
         trim(output, 3);
-        CHECK(output == Lines{"123", "abc"});
+        CHECK(output == FIGline{"123", "abc"});
     }
 }

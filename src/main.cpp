@@ -3,7 +3,7 @@
 #include "wrapper.h"
 
 void usage(char *);
-void print_output(Lines);
+void print_output(FIGline);
 
 
 int main(int argc, char *argv[])
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     auto wr = Wrapper(sm, 80);
 
     wr.clear();
-    wr.wrap_str("Hello", print_output);
+    wr.wrap_str(msg, print_output);
     print_output(wr.get());
 }
 
@@ -45,7 +45,7 @@ void usage(char *cmd)
     << std::endl;
 }
 
-void print_output(Lines v)
+void print_output(FIGline v)
 {
     std::cout << v << std::flush;
 }

@@ -1,17 +1,17 @@
-#include "lines.h"
+#include "figline.h"
 #include <iostream>
 
 
-Lines::Lines()
+FIGline::FIGline()
 {
 }
 
-Lines::Lines(std::initializer_list<std::string> v)
+FIGline::FIGline(std::initializer_list<std::string> v)
 {
     this->insert(this->begin(), v.begin(), v.end());
 }
 
-std::ostream& operator<<(std::ostream& os, Lines& v)
+std::ostream& operator<<(std::ostream& os, FIGline& v)
 {
     for (auto line : v) {
         os << line << '\n';
