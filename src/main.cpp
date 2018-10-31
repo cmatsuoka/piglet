@@ -2,8 +2,8 @@
 #include <iostream>
 #include <locale>
 #include "wrapper.h"
+#include "cxxopts.hpp"
 
-void usage(char *);
 void print_output(FIGline);
 static std::wstring to_wstring(const char *);
 
@@ -12,41 +12,62 @@ int main(int argc, char *argv[])
 {
     std::setlocale(LC_CTYPE, "");
 
-    int c;
-    while ((c = getopt(argc, argv, "h")) != -1) {
-        switch (c) {
-        case 'h':  // show usage information and exit
-            usage(argv[0]);
+    cxxopts::Options options(argv[0]);
+    options.add_options()
+        ("c,center", "center the output horizontally")
+        ("h,help", "show usage information and exit")
+        ("k,kern", "use kerning mode to display characters")
+        ("l,left", "left-align the output")
+        ("o,overlap", "use character overlapping mode")
+        ("p,paragraph", "ignore mid-paragraph line breaks")
+        ("r,right", "right-align the output")
+        ("S,smush", "use smushing mode to display characters")
+        ("W,full-width", "display characters in full width");
+
+    try {
+        auto opt = options.parse(argc, argv);
+
+        if (opt.count("help")) {
+            std::cout << options.help() << std::endl;
             exit(EXIT_SUCCESS);
-        default:
-            exit(EXIT_FAILURE);
         }
-    }
-
-    std::wstring msg;
-    if (optind < argc) {
-        msg += to_wstring(argv[optind]);
-        for (int i = optind + 1; i < argc; i++) {
-            msg = msg + L" " + to_wstring(argv[i]);
+    
+        std::wstring msg;
+        if (argc > 0) {
+            msg += to_wstring(argv[1]);
+            for (int i = 2; i < argc; i++) {
+                msg = msg + L" " + to_wstring(argv[i]);
+            }
         }
+    
+        auto font = FIGfont("fonts/standard.flf");
+        auto sm = Smusher(font);
+    
+        if (opt.count("o")) {
+            sm.mode = 0;
+        } else if (opt.count("k")) {
+            sm.mode = SmushKern;
+        } else if (opt.count("W")) {
+            sm.full_width = true;
+        }
+    
+        auto wr = Wrapper(sm, 80);
+    
+        if (opt.count("center")) {
+           wr.align = Align::Center;
+        } else if (opt.count("right")) {
+           wr.align = Align::Right;
+        } else if (opt.count("left")) {
+           wr.align = Align::Left;
+        }
+    
+        wr.clear();
+        wr.wrap_str(msg, print_output);
+        print_output(wr.get());
+    } catch (std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        exit(EXIT_FAILURE);
     }
-
-    auto font = FIGfont("fonts/standard.flf");
-    auto sm = Smusher(font);
-    auto wr = Wrapper(sm, 80);
-
-    wr.clear();
-    wr.wrap_str(msg, print_output);
-    print_output(wr.get());
-}
-
-void usage(char *cmd)
-{
-    std::cout << ""
-"Usage: " << cmd << " \n"
-"Options:\n"
-"    -h          display usage information and exit"
-    << std::endl;
 }
 
 void print_output(FIGline v)

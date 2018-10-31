@@ -7,12 +7,13 @@
 
 
 class Smusher {
-    uint32_t mode;
-    bool full_width;
     bool right2left;
     FIGfont& font;
     FIGline output;
  public:
+    uint32_t mode;
+    bool full_width;
+
     Smusher(FIGfont &f);
     FIGline get();
     bool empty();
