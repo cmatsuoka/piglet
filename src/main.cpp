@@ -158,7 +158,7 @@ int main(int argc, char *argv[])
             sm.full_width = true;
         }
     
-        auto wr = Wrapper(sm, 80);
+        auto wr = Wrapper(sm, cols);
     
         if (opt.count("center")) {
            wr.align = Align::Center;
