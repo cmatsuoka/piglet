@@ -13,14 +13,33 @@ constexpr char DefaultDir[] = "/usr/share/figlet";
 
 namespace {
 
-std::string find_font(std::string const& dir, std::string const& name)
-{
-    std::string path = dir + File::separator() + name;
-
-    // FIXME: add extension, check if file exists
-    return path;
+bool ends_with(std::string const& s, std::string const& ending) {
+    if (s.length() < ending.length()) {
+        return false;
+    }
+    return s.compare(s.length() - ending.length(), ending.length(), ending) == 0;
 }
 
+std::string find_font(std::string const& dir, std::string const& name)
+{
+    std::string n(name);
+
+    if (!ends_with(name, ".flf") && !ends_with(name, ".tlf")) {
+        n += ".flf";
+    }
+
+    if (n.front() == File::separator()) {
+        return n;
+    }
+
+    std::string path = dir + File::separator() + n;
+
+    if (File::exists(path)) {
+        return path;
+    }
+
+    return n;
+}
 
 // From https://stackoverflow.com/questions/1664476/is-it-possible-to-use-a-unicode-argv
 #define ARR_LEN(x) (sizeof(x)/sizeof(x[0]))
