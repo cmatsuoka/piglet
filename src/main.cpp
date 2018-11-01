@@ -46,6 +46,12 @@ std::string find_font(std::string const& dir, std::string const& name)
 
 std::wstring to_wstring(const char *s)
 {
+    std::wstring res;
+
+    if (s == nullptr || *s == 0) {
+        return res;
+    }
+
     typedef unsigned char byte;
     struct Level {
         byte Head, Data, Null;
@@ -68,15 +74,14 @@ std::wstring to_wstring(const char *s)
 
     wchar_t wc = 0;
     const char *p = s;
-    std::wstring result;
 
     while (*p != 0) {
         byte b = *p++;
-        if (b>>7 == 0) { // deal with ASCII
+        if (b>>7 == 0) {  // deal with ASCII
             wc = b;
-            result.push_back(wc);
+            res.push_back(wc);
             continue;
-        } // ASCII
+        }  // ASCII
 
         bool found = false;
         for (int i = 1; i < ARR_LEN(lev); ++i) {
@@ -84,24 +89,27 @@ std::wstring to_wstring(const char *s)
                 wc = b ^ lev[i].Null;            // remove the head
                 wc <<= lev[0].Data * i;
                 for (int j = i; j > 0; --j) {    // trailing bytes
-                    if (*p == 0) return result;  // unexpected
+                    if (*p == 0) {
+                        return res;              // unexpected
+                    }
                     b = *p++;
-                    if (!lev[0].encoded(b))      // encoding corrupted
-                        return result;
+                    if (!lev[0].encoded(b)) {    // encoding corrupted
+                        return res;
+                    }
                     wchar_t tmp = b ^ lev[0].Null;
                     wc |= tmp << lev[0].Data*(j-1);
-                } // trailing bytes
-                result.push_back(wc);
+                }  // trailing bytes
+                res.push_back(wc);
                 found = true;
                 break;
             }
         }
 
         if (!found) {
-            return result; // encoding incorrect
+            return res;  // encoding incorrect
         }
     }
-    return result;
+    return res;
 }
 
 }  // namespace
@@ -138,9 +146,11 @@ int main(int argc, char *argv[])
             std::cout << options.help() << std::endl;
             exit(EXIT_SUCCESS);
         }
-    
+
         std::wstring msg;
-        if (argc > 0) {
+
+        if (argc > 1) {
+            // read message from command line
             msg += to_wstring(argv[1]);
             for (int i = 2; i < argc; i++) {
                 msg = msg + L" " + to_wstring(argv[i]);
@@ -168,9 +178,21 @@ int main(int argc, char *argv[])
            wr.align = Align::Left;
         }
     
-        wr.clear();
-        wr.wrap_str(msg, print_output);
+        if (msg.length() > 0) {
+            // message from command line parameters
+            wr.wrap_str(msg, print_output);
+        } else {
+            // read from stdin if no message supplied in command line
+            std::wstring line;
+            std::getline(std::wcin, line);
+            while (!std::wcin.eof()) {
+                msg += line;
+                std::getline(std::wcin, line);
+                wr.wrap_str(msg, print_output);
+            }
+        }
         print_output(wr.get());
+
     } catch (std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
         exit(EXIT_FAILURE);
