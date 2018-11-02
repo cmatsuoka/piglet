@@ -4,17 +4,17 @@
 #include <unistd.h>
 #include <cstring>
 #include <cerrno>
+#include <codecvt>
 #include <fstream>
 
 
 namespace {
 
-    std::string error()
-    {
-        char *s = strerror(errno);
-        return std::string(s);
-    }
-
+std::string error()
+{
+    char *s = strerror(errno);
+    return std::string(s);
+}
 
 }  // namespace
 
@@ -23,6 +23,7 @@ File::File(std::string path, std::ios_base::openmode mode) :
     file(path, mode),
     path(path)
 {
+    file.imbue(std::locale(std::locale(""), new std::codecvt_utf8<wchar_t>));
     if (file.fail()) {
         throw std::runtime_error(path + ": " + error());
     }

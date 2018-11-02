@@ -91,7 +91,7 @@ FIGfont& FIGfont::load(std::string const& path)
         if (f.eof()) {
             break;
         }
-        int code = stoi(line.substr(0, line.find(L" ")));
+        int code = stoi(line.substr(0, line.find(L" ")), 0, 0);
         FIGchar c(f, height);
         chars[static_cast<wchar_t>(code)] = c;
     }

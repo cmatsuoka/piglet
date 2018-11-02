@@ -19,7 +19,7 @@ class FIGchar {
     bool operator!=(FIGchar const&) const;
 };
 
-std::ostream& operator<<(std::ostream&, FIGchar&);
+std::wostream& operator<<(std::wostream&, FIGchar&);
 
 
 #endif  // SRC_FIGCHAR_H_

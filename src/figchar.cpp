@@ -6,10 +6,10 @@
 
 namespace {
 
-    void trim_right(std::wstring &s)
-    {
-        s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) { return !std::isspace(ch); }).base(), s.end());
-    }
+void trim_right(std::wstring &s)
+{
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) { return !std::isspace(ch); }).base(), s.end());
+}
 
 }  // namespace
 
