@@ -2,21 +2,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <cstring>
 #include <cerrno>
 #include <codecvt>
 #include <fstream>
-
-
-namespace {
-
-std::string error()
-{
-    char *s = strerror(errno);
-    return std::string(s);
-}
-
-}  // namespace
+#include "util.h"
 
 
 File::File(std::string path, std::ios_base::openmode mode) :
@@ -25,7 +14,7 @@ File::File(std::string path, std::ios_base::openmode mode) :
 {
     file.imbue(std::locale(std::locale(""), new std::codecvt_utf8<wchar_t>));
     if (file.fail()) {
-        throw std::runtime_error(path + ": " + error());
+        throw std::runtime_error(path + ": " + util::error());
     }
 }
 
@@ -78,7 +67,7 @@ bool File::is_file(std::string const& name, bool except)
     struct stat st;
     if (stat(name.c_str(), &st) < 0) {
         if (except) {
-            throw std::runtime_error(name + ": " + error());
+            throw std::runtime_error(name + ": " + util::error());
         } else {
             return false;
         }
@@ -97,7 +86,7 @@ bool File::is_directory(std::string const& name, bool except)
     struct stat st;
     if (stat(name.c_str(), &st) < 0) {
         if (except) {
-            throw std::runtime_error(name + ": " + error());
+            throw std::runtime_error(name + ": " + util::error());
         } else {
             return false;
         }

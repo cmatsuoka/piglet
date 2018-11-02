@@ -23,9 +23,9 @@ TEST_SUITE("smusher") {
         CHECK(amount(output, fc, '$', 0xbf) == 5);
     }
 
-    TEST_CASE("smusher::trim") {
+    TEST_CASE("smusher::crop") {
         FIGline output{L"12345", L"abcde"};
-        trim(output, 3);
+        crop(output, 3);
         CHECK(output == FIGline{L"123", L"abc"});
     }
 }

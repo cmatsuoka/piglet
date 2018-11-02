@@ -1,17 +1,7 @@
 #include "figchar.h"
 #include <iostream>
-#include <algorithm>
 #include "file_io.h"
-
-
-namespace {
-
-void trim_right(std::wstring &s)
-{
-    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) { return !std::isspace(ch); }).base(), s.end());
-}
-
-}  // namespace
+#include "util.h"
 
 
 FIGchar::FIGchar() : lines()
@@ -46,7 +36,7 @@ FIGchar::FIGchar(InputFile& f, int height) : lines()
             // ...
         }
 
-        trim_right(line);
+        util::trim_right(line);
         if (line.length() < 1) {
             throw std::runtime_error("invalid character width");
         }

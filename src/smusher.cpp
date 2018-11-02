@@ -17,7 +17,7 @@ namespace {
         return amt;
     }
 
-    void trim(FIGline& lines, int width)
+    void crop(FIGline& lines, int width)
     {
         for (auto it = lines.begin(); it != lines.end(); it++) {
             *it = (*it).substr(0, width);
@@ -97,8 +97,8 @@ int Smusher::length()
 
 // Limit the size, in sub-characters, of the output buffer. If the buffer is
 // longer than the specified size, the rightmost sub-characters will be removed.
-Smusher& Smusher::trim(int width)
+Smusher& Smusher::crop(int width)
 {
-    ::trim(output, width);
+    ::crop(output, width);
     return *this;
 }

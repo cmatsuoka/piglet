@@ -1,4 +1,5 @@
 add_executable(piglet
+    util.cpp
     figline.cpp
     figchar.cpp
     figfont.cpp

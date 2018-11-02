@@ -1,28 +1,19 @@
 #include "wrapper.h"
 #include <string>
 #include <functional>
+#include "util.h"
 
 
 namespace {
 
-    std::wstring trim(const std::wstring& str, const std::wstring& whitespace = L" \t")
-    {
-        const auto start = str.find_first_not_of(whitespace);
-        if (start == std::string::npos) {
-            return L"";  // no content
-        }
-        const auto end = str.find_last_not_of(whitespace);
-        return str.substr(start, end - start + 1);
+FIGline add_pad(FIGline& v, int pad_size) {
+    FIGline res;
+    auto pad = std::wstring(pad_size, ' ');
+    for (auto line : v) {
+        res.push_back(pad + line);
     }
-
-    FIGline add_pad(FIGline& v, int pad_size) {
-        FIGline res;
-        auto pad = std::wstring(pad_size, ' ');
-        for (auto line : v) {
-            res.push_back(pad + line);
-        }
-        return res;
-    }
+    return res;
+}
 
 }  // namespace
 
@@ -49,7 +40,7 @@ Wrapper& Wrapper::clear()
 FIGline Wrapper::get()
 {
     if (length() > width) {
-        sm.trim(width);
+        sm.crop(width);
     }
 
     int w = width - length();
@@ -107,7 +98,9 @@ bool Wrapper::push(wchar_t ch)
 // Add a string to the output buffer, wrapping it if necessary.
 Wrapper& Wrapper::wrap_str(std::wstring const& ss, std::function<void(FIGline)> flush)
 {
-    auto s = trim(ss);
+    std::wstring s(ss);
+
+    util::trim_right(s);
     if (!has_space && !s.empty()) {
         push(' ');
     }

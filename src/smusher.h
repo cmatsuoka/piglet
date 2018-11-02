@@ -20,7 +20,7 @@ class Smusher {
     Smusher& clear();
     Smusher& push(std::wstring);
     Smusher& push(wchar_t);
-    Smusher& trim(int);
+    Smusher& crop(int);
     int length();
 };
 
