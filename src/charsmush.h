@@ -6,7 +6,7 @@
 
 class CharSmusher {
  public:
-    static char smush(const char, const char, const char, bool, uint32_t);
+    static wchar_t smush(const wchar_t, const wchar_t, const wchar_t, bool, uint32_t);
 };
 
 #endif  // SRC_CHARSMUSH_H_

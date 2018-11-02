@@ -1,5 +1,5 @@
-#include <unistd.h>
 #include <iostream>
+#include <clocale>
 #include <locale>
 #include "wrapper.h"
 #include "cxxopts.hpp"

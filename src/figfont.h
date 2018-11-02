@@ -15,7 +15,7 @@ constexpr uint32_t SmushEnable    = 1 << 7;
 
 
 class FIGfont {
-    char version;        // font standard version (currently 'a')
+    wchar_t version;     // font standard version (currently 'a')
     int baseline;        // number of lines from the baseline of a FIGcharacter
     int max_length;      // maximum length of any line describing a FIGcharacter
     int comment_lines;   // number of comment lines at the start of the file
@@ -23,7 +23,7 @@ class FIGfont {
     int count;           // number of code-tagged FIGcharacters in this FIGfont
     std::unordered_map<wchar_t, FIGchar> chars;
  public:
-    char hardblank;      // sub-character used to represent hardblanks
+    wchar_t hardblank;   // sub-character used to represent hardblanks
     int height;
     int old_layout;
     int layout;

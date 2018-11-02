@@ -7,11 +7,11 @@
 
 namespace {
 
-    int amount(FIGline& lines, FIGchar& c, wchar_t hardblank, uint32_t mode)
+    size_t amount(FIGline& lines, FIGchar& c, wchar_t hardblank, uint32_t mode)
     {
-        int amt = 9999;
+        size_t amt = 9999;
         auto clines = c.get();
-        for (int i = 0; i < lines.size(); i++) {
+        for (size_t i = 0; i < lines.size(); i++) {
             amt = std::min(amt, StringSmusher::amount(lines[i], clines[i], hardblank, mode));
         }
         return amt;
@@ -28,7 +28,7 @@ namespace {
     {
         auto amt = full_width ? 0 : amount(lines, c, hardblank, mode);
         auto clines = c.get();
-        for (int i = 0; i < lines.size(); i++) {
+        for (size_t i = 0; i < lines.size(); i++) {
             lines[i] = StringSmusher::smush(lines[i], clines[i], amt, hardblank, mode);
         }
     }
@@ -50,7 +50,7 @@ FIGline Smusher::get()
 {
     FIGline res = output;
     for (auto it = res.begin(); it != res.end(); it++) {
-        std::replace((*it).begin(), (*it).end(), font.hardblank, ' ');
+        std::replace((*it).begin(), (*it).end(), font.hardblank, L' ');
     }
     return res;
 }

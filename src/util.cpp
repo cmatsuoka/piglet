@@ -1,6 +1,7 @@
 #include "util.h"
 #include <string>
 #include <cstring>
+#include <cctype>
 #include <vector>
 #include <fstream>
 #include <algorithm>

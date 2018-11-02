@@ -4,28 +4,28 @@
 
 namespace {
 
-    constexpr char cmp_return_other(const char a, const char b, const char c)
+    constexpr wchar_t cmp_return_other(const wchar_t a, const wchar_t b, const wchar_t c)
     {
         return (a == b) ? c : (a == c) ? b : 0;
     }
     
-    char find_return_latter(std::string const& s1, std::string const& s2, const char a, const char b)
+    wchar_t find_return_latter(std::wstring const& s1, std::wstring const& s2, const wchar_t a, const wchar_t b)
     {
-        if (s1.find(a) != std::string::npos && s2.find(b) != std::string::npos) {
+        if (s1.find(a) != std::wstring::npos && s2.find(b) != std::wstring::npos) {
             return b;
         }
-        if (s1.find(b) != std::string::npos && s2.find(a) != std::string::npos) {
+        if (s1.find(b) != std::wstring::npos && s2.find(a) != std::wstring::npos) {
             return a;
         }
         return 0;
     }
     
-    constexpr char cmp_any_return(const char c1, const char c2, const char a, const char b, const char r)
+    constexpr wchar_t cmp_any_return(const wchar_t c1, const wchar_t c2, const wchar_t a, const wchar_t b, const wchar_t r)
     {
         return ((a == c1 && b == c2) || (a == c2 && b == c1)) ? r : 0;
     }
 
-    constexpr char cmp_return(const char c1, const char c2, const char a, const char b, const char r)
+    constexpr wchar_t cmp_return(const wchar_t c1, const wchar_t c2, const wchar_t a, const wchar_t b, const wchar_t r)
     {
         return (a == c1 && b == c2) ? r : 0;
     }
@@ -33,7 +33,7 @@ namespace {
     // Rule 1: EQUAL CHARACTER SMUSHING (code value 1)
     // Two sub-characters are smushed into a single sub-character if they are the same (except
     // hardblanks). 
-    constexpr char rule_1(const char l, const char r, const uint32_t mode)
+    constexpr wchar_t rule_1(const wchar_t l, const wchar_t r, const uint32_t mode)
     {
         if (mode & SmushEqual) {
             if (l == r) {
@@ -46,11 +46,11 @@ namespace {
     // Rule 2: UNDERSCORE SMUSHING (code value 2)
     // An underscore ("_") will be replaced by any of: "|", "/", "\", "[", "]", "{", "}", "(",
     // ")", "<" or ">".
-    char rule_2(const char l, const char r, const uint32_t mode)
+    wchar_t rule_2(const wchar_t l, const wchar_t r, const uint32_t mode)
     {
         if (mode & SmushUnderline) {
-            char ret;
-            if ((ret = find_return_latter("_", R"#(|/\[]{}()<>)#", l, r)) != 0) {
+            wchar_t ret;
+            if ((ret = find_return_latter(L"_", LR"#(|/\[]{}()<>)#", l, r)) != 0) {
                 return ret;
             }
         }
@@ -61,23 +61,23 @@ namespace {
     // A hierarchy of six classes is used: "|", "/\", "[]", "{}", "()", and "<>". When two
     // smushing sub-characters are from different classes, the one from the latter class will
     // be used.
-    char rule_3(const char l, const char r, const uint32_t mode)
+    wchar_t rule_3(const wchar_t l, const wchar_t r, const uint32_t mode)
     {
         if (mode & SmushHierarchy) {
-            char ret;
-            if ((ret = find_return_latter("|", R"#(/\[]{}()<>)#", l, r)) != 0) {
+            wchar_t ret;
+            if ((ret = find_return_latter(L"|", LR"#(/\[]{}()<>)#", l, r)) != 0) {
                 return ret;
             }
-            if ((ret = find_return_latter(R"(/\)", "[]{}()<>", l, r)) != 0) {
+            if ((ret = find_return_latter(LR"(/\)", L"[]{}()<>", l, r)) != 0) {
                 return ret;
             }
-            if ((ret = find_return_latter("[]", "{}()<>", l, r)) != 0) {
+            if ((ret = find_return_latter(L"[]", L"{}()<>", l, r)) != 0) {
                 return ret;
             }
-            if ((ret = find_return_latter("{}", "()<>", l, r)) != 0) {
+            if ((ret = find_return_latter(L"{}", L"()<>", l, r)) != 0) {
                 return ret;
             }
-            if ((ret = find_return_latter("()", "<>", l, r)) != 0) {
+            if ((ret = find_return_latter(L"()", L"<>", l, r)) != 0) {
                 return ret;
             }
         }
@@ -87,10 +87,10 @@ namespace {
     // Rule 4: OPPOSITE PAIR SMUSHING (code value 8)
     // Smushes opposing brackets ("[]" or "]["), braces ("{}" or "}{") and parentheses ("()"
     // or ")(") together, replacing any such pair with a vertical bar ("|").
-    char rule_4(const char l, const char r, const uint32_t mode)
+    wchar_t rule_4(const wchar_t l, const wchar_t r, const uint32_t mode)
     {
         if (mode & SmushPair) {
-            char ret;
+            wchar_t ret;
             if ((ret = cmp_any_return('[', ']', l, r, '|')) != 0) {
                 return ret;
             }
@@ -108,10 +108,10 @@ namespace {
     // Smushes "/\" into "|", "\/" into "Y", and "><" into "X". Note that "<>" is not smushed
     // in any way by this rule. The name "BIG X" is historical; originally all three pairs
     // were smushed into "X".
-    char rule_5(const char l, const char r, const uint32_t mode)
+    wchar_t rule_5(const wchar_t l, const wchar_t r, const uint32_t mode)
     {
         if (mode & SmushBigX) {
-            char ret;
+            wchar_t ret;
             if ((ret = cmp_return('/', '\\', l, r, '|')) != 0) {
                 return ret;
             }
@@ -128,9 +128,9 @@ namespace {
 }  // namespace
 
 
-char CharSmusher::smush(const char l, const char r, const char hardblank, bool right2left, uint32_t mode)
+wchar_t CharSmusher::smush(const wchar_t l, const wchar_t r, const wchar_t hardblank, bool right2left, uint32_t mode)
 {
-    char ret;
+    wchar_t ret;
     if ((ret = cmp_return_other(' ', l, r)) != 0) {
         return ret;
     }
