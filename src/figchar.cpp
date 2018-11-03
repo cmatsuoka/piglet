@@ -32,8 +32,10 @@ FIGchar::FIGchar(InputFile& f, int height) : lines()
         line.clear();
         f.read_line(line);
         if (f.eof()) {
-            // read rest of lines
-            // ...
+            for (auto it = lines.begin(); it != lines.end(); it++) {
+                it->clear();
+            }
+            return;
         }
 
         util::trim_right(line);
