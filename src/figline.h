@@ -12,7 +12,7 @@ class FIGline : public std::vector<std::wstring> {
     FIGline(std::initializer_list<std::wstring>);
 };
 
-std::wostream& operator<<(std::wostream&, FIGline&);
+std::wostream& operator<<(std::wostream&, FIGline);
 
 
 #endif  // SRC_FIGLINE_H_

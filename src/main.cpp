@@ -1,10 +1,10 @@
 #include <iostream>
 #include <clocale>
+#include <cctype>
 #include <locale>
 #include "wrapper.h"
+#include "util.h"
 #include "cxxopts.hpp"
-
-void print_output(FIGline);
 
 constexpr int DefaultWidth = 80;
 constexpr char DefaultFont[] = "standard.flf";
@@ -40,6 +40,30 @@ std::string find_font(std::string const& dir, std::string const& name)
 
     return n;
 }
+
+void write_tokens(Wrapper& wr, std::wstring const& s, std::function<void(FIGline)> flush)
+{
+    for (auto v : util::split_whitespace(s)) {
+        wr.wrap_str(v, flush);
+    }
+}
+
+void write_line(Wrapper& wr, std::wstring const& s, std::function<void(FIGline)> flush)
+{
+    wr.clear();
+    write_tokens(wr, s, flush);
+    flush(wr.get());
+}
+
+void write_paragraph(Wrapper& wr, std::wstring const& s, std::function<void(FIGline)> flush)
+{
+    if (std::isspace(s.front())) {
+        flush(wr.get());
+        wr.clear();
+    }
+    write_tokens(wr, s, flush);
+}
+
 
 // From https://stackoverflow.com/questions/1664476/is-it-possible-to-use-a-unicode-argv
 #define ARR_LEN(x) (sizeof(x)/sizeof(x[0]))
@@ -178,29 +202,34 @@ int main(int argc, char *argv[])
            wr.align = Align::Left;
         }
     
+        auto print_line = [](FIGline v) { std::wcout << v << std::flush; };
+
         if (msg.length() > 0) {
-            // message from command line parameters
-            wr.wrap_str(msg, print_output);
+            // read message from command line parameters
+            write_line(wr, msg, print_line);
         } else {
-            // read from stdin if no message supplied in command line
+            // read message from stdin
             std::wstring line;
             std::getline(std::wcin, line);
-            while (!std::wcin.eof()) {
-                msg += line;
-                std::getline(std::wcin, line);
-                wr.wrap_str(msg, print_output);
+
+            if (opt.count("paragraph")) {
+                while (!std::wcin.eof()) {
+                    msg += line;
+                    write_paragraph(wr, line, print_line);
+                    std::getline(std::wcin, line);
+                }
+                print_line(wr.get());
+            } else {
+                while (!std::wcin.eof()) {
+                    msg += line;
+                    write_line(wr, line, print_line);
+                    std::getline(std::wcin, line);
+                }
             }
         }
-        print_output(wr.get());
 
     } catch (std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
         exit(EXIT_FAILURE);
     }
 }
-
-void print_output(FIGline v)
-{
-    std::wcout << v << std::flush;
-}
-
