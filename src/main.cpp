@@ -123,6 +123,7 @@ int main(int argc, char *argv[])
     int cols = DefaultWidth;
     std::string font_dir(DefaultDir);
     std::string font_name(DefaultFont);
+    int mode = 0;
 
     cxxopts::Options options(argv[0]);
     options.add_options()
@@ -132,7 +133,7 @@ int main(int argc, char *argv[])
         ("h,help", "show usage information and exit")
         ("k,kern", "use kerning mode to display characters")
         ("l,left", "left-align the output")
-        //("m,mode", "override the font layout mode", cxxopts::value<uint32_t>(num));
+        ("m,mode", "override the font layout mode", cxxopts::value<int>(mode))
         ("o,overlap", "use character overlapping mode")
         ("p,paragraph", "ignore mid-paragraph line breaks")
         ("r,right", "right-align the output")
@@ -159,6 +160,11 @@ int main(int argc, char *argv[])
         }
 
         auto font = FIGfont(find_font(font_dir, font_name));
+
+        if (opt.count("m")) {
+            font.layout = mode;
+        }
+
         auto sm = Smusher(font);
     
         if (opt.count("o")) {
