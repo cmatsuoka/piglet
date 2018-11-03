@@ -56,7 +56,6 @@ std::wstring StringSmusher::smush(std::wstring const& s1, std::wstring const& ss
     auto m1 = l1 - amt;
 
     // part 1: only characters from s1
-    // FIXME: we want characters not bytes
     auto res = s1.substr(0, m1);
 
     // part 2: s1 and s2 overlap
@@ -72,7 +71,6 @@ std::wstring StringSmusher::smush(std::wstring const& s1, std::wstring const& ss
     }
 
     // part 3: remainder of s1 after the end of s2
-    // FIXME: we want characters not bytes
     auto m2 = m1 + l2;
     for (auto i = m2; i < l1; i++) {
         res += s1[i];

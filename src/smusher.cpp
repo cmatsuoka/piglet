@@ -20,7 +20,7 @@ namespace {
     void crop(FIGline& lines, int width)
     {
         for (auto it = lines.begin(); it != lines.end(); it++) {
-            *it = (*it).substr(0, width);
+            *it = it->substr(0, width);
         }
     }
 
@@ -50,7 +50,7 @@ FIGline Smusher::get()
 {
     FIGline res = output;
     for (auto it = res.begin(); it != res.end(); it++) {
-        std::replace((*it).begin(), (*it).end(), font.hardblank, L' ');
+        std::replace(it->begin(), it->end(), font.hardblank, L' ');
     }
     return res;
 }
@@ -65,7 +65,7 @@ bool Smusher::empty()
 Smusher& Smusher::clear()
 {
     for (auto it = output.begin(); it != output.end(); it++) {
-        (*it).clear();
+        it->clear();
     }
     return *this;
 }
