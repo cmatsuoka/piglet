@@ -22,7 +22,7 @@ void trim_right(std::wstring& s)
     s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) { return !std::isspace(ch); }).base(), s.end());
 }
 
-bool starts_with(std::wstring const& s, std::wstring prefix)
+bool starts_with(std::wstring const& s, std::wstring const& prefix)
 {
     return s.compare(0, prefix.length(), prefix) == 0;
 }

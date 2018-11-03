@@ -9,7 +9,7 @@ namespace util {
 
 std::string error();
 void trim_right(std::wstring&);
-bool starts_with(std::wstring const&, std::wstring);
+bool starts_with(std::wstring const&, std::wstring const&);
 std::vector<std::wstring> split_whitespace(std::wstring const&);
 
 }  // namespace util
