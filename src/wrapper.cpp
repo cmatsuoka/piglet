@@ -1,5 +1,6 @@
 #include "wrapper.h"
 #include <string>
+#include <cctype>
 #include <functional>
 #include "util.h"
 
