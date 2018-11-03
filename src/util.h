@@ -2,12 +2,15 @@
 #define SRC_UTIL_H_
 
 #include <string>
+#include <vector>
 
 
 namespace util {
 
 std::string error();
 void trim_right(std::wstring&);
+bool starts_with(std::wstring const&, std::wstring);
+std::vector<std::wstring> split_whitespace(std::wstring const&);
 
 }  // namespace util
 

@@ -1,28 +1,9 @@
 #include "figfont.h"
 #include <string>
 #include <iostream>
-#include <sstream>
-#include <iterator>
 #include "figchar.h"
 #include "file_io.h"
-
-
-namespace {
-
-    bool starts_with(std::wstring const& s, std::wstring prefix)
-    {
-        return s.compare(0, prefix.length(), prefix) == 0;
-    }
-
-    std::vector<std::wstring> split_whitespace(std::wstring const& s)
-    {
-        // FIXME: use C++17 ranges when available
-        std::wistringstream ss(s);
-        std::istream_iterator<std::wstring, wchar_t> begin(ss), end;
-        std::vector<std::wstring> v(begin, end);
-        return v;
-    }
-}
+#include "util.h"
 
 
 FIGfont::FIGfont() :
@@ -101,11 +82,11 @@ FIGfont& FIGfont::load(std::string const& path)
 
 FIGfont& FIGfont::parse_header(std::wstring const& line)
 {
-    if (!starts_with(line, L"flf2") && !starts_with(line, L"tlf2")) {
+    if (!util::starts_with(line, L"flf2") && !util::starts_with(line, L"tlf2")) {
         throw std::runtime_error("unsupported font format");
     }
 
-    auto parms = split_whitespace(line);
+    auto parms = util::split_whitespace(line);
     if (parms.size() < 9 || parms[0].size() < 6) {
         throw std::runtime_error("unsupported font format");
     }
