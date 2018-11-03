@@ -95,6 +95,16 @@ bool Wrapper::push(wchar_t ch)
     return true;
 }
 
+// Tokenize string and add tokens to output buffer, wrapping if necessary.
+Wrapper& Wrapper::wrap(std::wstring const& s, std::function<void(FIGline)> flush)
+{
+    for (auto v : util::split_whitespace(s)) {
+        wrap_str(v, flush);
+    }
+    return *this;
+}
+
+
 // Add a string to the output buffer, wrapping it if necessary.
 Wrapper& Wrapper::wrap_str(std::wstring const& ss, std::function<void(FIGline)> flush)
 {
@@ -116,8 +126,8 @@ Wrapper& Wrapper::wrap_str(std::wstring const& ss, std::function<void(FIGline)> 
             wrap_word(s, flush);
         }
         has_space = false;
-   }
-   return *this;
+    }
+    return *this;
 }
 
 // Add a word to the output buffer, breaking it if necessary.
@@ -137,3 +147,24 @@ Wrapper& Wrapper::wrap_word(std::wstring const& s, std::function<void(FIGline)> 
 
     return *this;
 }
+
+// Process an entire line, wrapping words if necessary.
+Wrapper& Wrapper::wrap_line(std::wstring const& s, std::function<void(FIGline)> flush)
+{
+    clear();
+    wrap(s, flush);
+    flush(get());
+    return *this;
+}
+
+// Process an entire paragraph, wrapping words if necessary.
+Wrapper& Wrapper::wrap_paragraph(std::wstring const& s, std::function<void(FIGline)> flush)
+{
+    if (std::isspace(s.front())) {
+        flush(get());
+        clear();
+    }
+    wrap(s, flush);
+    return *this;
+}
+

@@ -26,6 +26,9 @@ class Wrapper {
     bool push(wchar_t);
     Wrapper& wrap_str(std::wstring const&, std::function<void(FIGline)>);
     Wrapper& wrap_word(std::wstring const&, std::function<void(FIGline)>);
+    Wrapper& wrap(std::wstring const&, std::function<void(FIGline)>);
+    Wrapper& wrap_line(std::wstring const&, std::function<void(FIGline)>);
+    Wrapper& wrap_paragraph(std::wstring const&, std::function<void(FIGline)>);
     FIGline get();
     int length();
     bool empty();

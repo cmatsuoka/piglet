@@ -41,29 +41,6 @@ std::string find_font(std::string const& dir, std::string const& name)
     return n;
 }
 
-void write_tokens(Wrapper& wr, std::wstring const& s, std::function<void(FIGline)> flush)
-{
-    for (auto v : util::split_whitespace(s)) {
-        wr.wrap_str(v, flush);
-    }
-}
-
-void write_line(Wrapper& wr, std::wstring const& s, std::function<void(FIGline)> flush)
-{
-    wr.clear();
-    write_tokens(wr, s, flush);
-    flush(wr.get());
-}
-
-void write_paragraph(Wrapper& wr, std::wstring const& s, std::function<void(FIGline)> flush)
-{
-    if (std::isspace(s.front())) {
-        flush(wr.get());
-        wr.clear();
-    }
-    write_tokens(wr, s, flush);
-}
-
 
 // From https://stackoverflow.com/questions/1664476/is-it-possible-to-use-a-unicode-argv
 #define ARR_LEN(x) (sizeof(x)/sizeof(x[0]))
@@ -206,7 +183,7 @@ int main(int argc, char *argv[])
 
         if (msg.length() > 0) {
             // read message from command line parameters
-            write_line(wr, msg, print_line);
+            wr.wrap_line(msg, print_line);
         } else {
             // read message from stdin
             std::wstring line;
@@ -215,14 +192,14 @@ int main(int argc, char *argv[])
             if (opt.count("paragraph")) {
                 while (!std::wcin.eof()) {
                     msg += line;
-                    write_paragraph(wr, line, print_line);
+                    wr.wrap_paragraph(line, print_line);
                     std::getline(std::wcin, line);
                 }
                 print_line(wr.get());
             } else {
                 while (!std::wcin.eof()) {
                     msg += line;
-                    write_line(wr, line, print_line);
+                    wr.wrap_line(line, print_line);
                     std::getline(std::wcin, line);
                 }
             }
