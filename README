@@ -1,0 +1,44 @@
+
+
+  ____  _       _      _            _//|.-~~~~-,
+ |  _ \(_) __ _| | ___| |_        _/oo  \       \_@
+ | |_) | |/ _` | |/ _ \ __|      (")_   /   /   |
+ |  __/| | (_| | |  __/ |_         '--'|| |-\  /
+ |_|   |_|\__, |_|\___|\__|            //_/ /_/ jgs
+          |___/            
+
+
+ A FIGdriver implementation in C++
+ ---------------------------------
+
+ A FIGdriver is a program that uses FIGlet FIGfonts to create banners in
+ ASCII-art style. Piglet is an experimental FIGdriver implementation
+ written in C++.
+
+ Piglet prints messages in a variety of fonts with adjacent characters
+ kerned and "smushed" together in various ways. FIGlet fonts are stored
+ in separate files, which can be identified by the suffix .flf. Piglet
+ also supports TOIlet .tlf UTF-8 fonts. 
+
+ Usage:
+   src/piglet [options] [message]
+
+   -c, --center      center the output horizontally
+   -d, --dir arg     set the default font directory
+   -f, --font arg    specify the figfont to use
+   -h, --help        show usage information and exit
+   -k, --kern        use kerning mode to display characters
+   -l, --left        left-align the output
+   -m, --mode arg    override the font layout mode
+   -o, --overlap     use character overlapping mode
+   -p, --paragraph   ignore mid-paragraph line breaks
+   -r, --right       right-align the output
+   -S, --smush       use smushing mode to display characters
+   -W, --full-width  display characters in full width
+   -w, --width arg   set the output width
+
+
+ Pig ASCII art by Joan G. Stark.
+
+
+
