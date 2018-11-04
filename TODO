@@ -1,3 +1,5 @@
 - Deal with different input encodings, especially messages passed in
   the Windows command line.
 - Corretly display TOIlet fonts in the Windows terminal.  
+- Add binary execution tests.
+- Add support for zipped font files
