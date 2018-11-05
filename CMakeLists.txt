@@ -3,6 +3,8 @@ project(piglet)
 
 option(BUILD_TESTS "Build tests" ON)
 
+add_definitions(-DFONT_DIR="/usr/share/figlet")
+
 add_subdirectory(src)
 
 if(BUILD_TESTS)

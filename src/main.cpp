@@ -8,7 +8,7 @@
 
 constexpr int DefaultWidth = 80;
 constexpr char DefaultFont[] = "standard.flf";
-constexpr char DefaultDir[] = "/usr/share/figlet";
+constexpr char DefaultDir[] = FONT_DIR;
 
 
 namespace {
