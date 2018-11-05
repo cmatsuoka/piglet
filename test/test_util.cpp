@@ -13,10 +13,27 @@ TEST_SUITE("util") {
     }
 
     TEST_CASE("util::starts_with") {
+        CHECK(!util::starts_with("", "abc"));
+        CHECK(util::starts_with("abc", "abc"));
+        CHECK(util::starts_with("abc123", "abc"));
+        CHECK(!util::starts_with("abc123", "bc1"));
+
         CHECK(!util::starts_with(L"", L"abc"));
         CHECK(util::starts_with(L"abc", L"abc"));
         CHECK(util::starts_with(L"abc123", L"abc"));
         CHECK(!util::starts_with(L"abc123", L"bc1"));
+    }
+
+    TEST_CASE("util::ends_with") {
+        CHECK(!util::ends_with("", "abc"));
+        CHECK(util::ends_with("abc", "abc"));
+        CHECK(util::ends_with("abc123", "123"));
+        CHECK(!util::ends_with("abc123", "bc1"));
+
+        CHECK(!util::ends_with(L"", L"abc"));
+        CHECK(util::ends_with(L"abc", L"abc"));
+        CHECK(util::ends_with(L"abc123", L"123"));
+        CHECK(!util::ends_with(L"abc123", L"bc1"));
     }
 
     TEST_CASE("util::split_whitespace") {

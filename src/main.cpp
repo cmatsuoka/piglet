@@ -13,18 +13,11 @@ constexpr char DefaultDir[] = "/usr/share/figlet";
 
 namespace {
 
-bool ends_with(std::string const& s, std::string const& ending) {
-    if (s.length() < ending.length()) {
-        return false;
-    }
-    return s.compare(s.length() - ending.length(), ending.length(), ending) == 0;
-}
-
 std::string find_font(std::string const& dir, std::string const& name)
 {
     std::string n(name);
 
-    if (!ends_with(name, ".flf") && !ends_with(name, ".tlf")) {
+    if (!util::ends_with(name, ".flf") && !util::ends_with(name, ".tlf")) {
         n += ".flf";
     }
 
