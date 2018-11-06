@@ -7,6 +7,7 @@
 #include <cerrno>
 #include <codecvt>
 #include <fstream>
+#include <stdexcept>
 #include "util.h"
 
 

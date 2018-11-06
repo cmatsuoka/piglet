@@ -1,6 +1,7 @@
 #include "figfont.h"
 #include <string>
 #include <iostream>
+#include <stdexcept>
 #include "figchar.h"
 #include "file_io.h"
 #include "util.h"

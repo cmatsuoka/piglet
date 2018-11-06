@@ -1,5 +1,6 @@
 #include "figchar.h"
 #include <iostream>
+#include <stdexcept>
 #include "file_io.h"
 #include "util.h"
 
