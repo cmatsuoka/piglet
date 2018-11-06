@@ -48,13 +48,15 @@ std::wstring to_wstring(const char *s)
 
     typedef unsigned char byte;
     struct Level {
-        byte Head, Data, Null;
+        byte head, data, null;
         Level(byte h, byte d) {
-            Head = h; // the head shifted to the right
-            Data = d; // number of data bits
-            Null = h << d; // encoded byte with zero data bits
+            head = h;       // the head shifted to the right
+            data = d;       // number of data bits
+            null = h << d;  // encoded byte with zero data bits
         }
-        bool encoded(byte b) { return b>>Data == Head; }
+        bool encoded(byte b) {
+            return b>>data == head;
+        }
     };
 
     Level lev[] = {
@@ -80,8 +82,8 @@ std::wstring to_wstring(const char *s)
         bool found = false;
         for (int i = 1; i < ARR_LEN(lev); ++i) {
             if (lev[i].encoded(b)) {
-                wc = b ^ lev[i].Null;            // remove the head
-                wc <<= lev[0].Data * i;
+                wc = b ^ lev[i].null;            // remove the head
+                wc <<= lev[0].data * i;
                 for (int j = i; j > 0; --j) {    // trailing bytes
                     if (*p == 0) {
                         return res;              // unexpected
@@ -90,8 +92,8 @@ std::wstring to_wstring(const char *s)
                     if (!lev[0].encoded(b)) {    // encoding corrupted
                         return res;
                     }
-                    wchar_t tmp = b ^ lev[0].Null;
-                    wc |= tmp << lev[0].Data*(j-1);
+                    wchar_t tmp = b ^ lev[0].null;
+                    wc |= tmp << lev[0].data*(j-1);
                 }  // trailing bytes
                 res.push_back(wc);
                 found = true;
