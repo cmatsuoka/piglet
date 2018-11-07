@@ -2,6 +2,7 @@
 #include <string>
 #include <cstring>
 #include <cctype>
+#include <cerrno>
 #include <sstream>
 #include <iterator>
 #include <vector>
